@@ -1,0 +1,288 @@
+
+/**
+ * A description of class Reservation.
+ */
+public class Reservation {
+/**
+ * The user's name.
+ */
+private String myName;
+/**
+ * the user's payment type.
+ */
+private String myPaymentType;
+/**
+ * the user's age.
+ */
+private int myAge;
+/**
+ * the number of days the stay is.
+ */
+private int myNumDays;
+/**
+ * Checks if user is a member.
+ */
+private boolean isAAA;
+/**
+ * the number of adults staying in each room.
+ */
+private int numOfAdults;
+/**
+ * the number of kids staying in each room.
+ */
+private int numOfKids;
+/**
+ * the type of room (single/double).
+ */
+private String roomType;
+/**
+ * if the code is broken.
+ */
+private boolean isBroken = false;
+//_________________________________
+/**
+ * the users entered a negative number of people or zero adults.
+ */
+public static final int LESS = -2;
+
+/**
+ * USA's age of legal adult.
+ */
+public static final int ADULT = 18;
+
+/**
+ * maximum number of nights user is allowed to stay.
+ */
+public static final int MAX_NIGHTS = 28;
+
+/**
+ * maximum age of user.
+ */
+public static final int MAX_AGE = 125;
+
+/**
+ * age at which user is considered a senior.
+ */
+public static final int SENIOR = 65;
+
+/**
+ * senior age discount.
+ * (4% off for seniors)
+ */
+public static final double SENIOR_DISCOUNT = 0.04;
+
+/**
+ * payment type discount.
+ * (0.1% off for using cash or check)
+ */
+public static final double PAY_TYPE_DISCOUNT = 0.001;
+
+/**
+ * member discount.
+ * (2% off for members)
+ */
+public static final double MEMBER_DISCOUNT = 0.02;
+
+//_________________________________
+
+/**
+ *
+ * @param name name of use.
+ * @param payment payment type of user.
+ * @param age how old user is.
+ * @param days length of user's stay.
+ * @param aaa if the user is a member.
+ * @param adults the number of adults in each room.
+ * @param kids the number of kids in each room.
+ * @param room the room type (single/double).
+ */
+public Reservation (final String name, final String payment, final int age,
+        final int days, final boolean aaa, final int adults, final int kids, final String room) {
+    myName = name;
+    myAge = age;
+    isAAA = aaa;
+    myNumDays = days;
+    myPaymentType = payment;
+    numOfAdults = adults;
+    numOfKids = kids;
+    roomType = room;
+    //checkIn = in;
+    //checkOut = out;
+
+    }
+/**
+ * gets the type of room the user wishes to stay in.
+ * @return type of room the user wishes to stay in.
+ */
+public String getRoomType() {
+    return roomType;
+}
+ /**
+  * gets the number of adults.
+  * @return the number of adults.
+  */
+public int getAdults() {
+    return numOfAdults;
+}
+
+/**
+ * gets the number of kids.
+ * @return the number of kids.
+ */
+public int getKids() {
+    return numOfKids;
+}
+
+/**
+ * returns the length of the user's stay.
+ * @return number of days the user stays at room
+ */
+public int getNumDays() {
+    return myNumDays;
+}
+
+/**
+ * gets the name of the customer.
+ * @return the name of the customer
+ */
+public String getCustomerName() {
+    return myName;
+}
+
+/**
+ * stops the program if the user's inputs are invalid.
+ */
+public void isValid() {
+
+    Rooms room = null;
+
+        if (roomType.equalsIgnoreCase("single bed")
+                || roomType.equalsIgnoreCase("single")
+                ||  roomType.equalsIgnoreCase("single ")) {
+            room = new SingleRoom(1, getAdults(), getKids());
+        } else if (roomType.equalsIgnoreCase("double bed")
+                || roomType.equalsIgnoreCase("double")
+                || roomType.equalsIgnoreCase("double ")) {
+            room = new DoubleBedroom(2, getAdults(), getKids());
+        } else {
+            System.out.print("Please enter valid room type. (Single bed/ double bed)");
+            isBroken = true;
+            //System.exit(0);
+        }
+
+
+    if ((room.getNumAdults() == -1)
+            || (room.getNumKids() == -1)) {
+        System.out.println("\nYou have exeeded the maximum limit of"
+                + " people who can stay in a room together. ");
+        System.out.println("A maximum of 2 adults, or 1 adult and 1 chlid can"
+                + " stay in a single.");
+        System.out.println("A maximum of 3 adults, or 2 adults and 2 chlidren can"
+                + " stay in a double bedroom.");
+        isBroken = true;
+        //System.exit(0);
+    }
+
+    if ((room.getNumAdults() == LESS)
+            || (room.getNumKids() == LESS)) {
+        System.out.println("\nPlease enter a valid number of people.");
+        isBroken = true;
+        //System.exit(0);
+    }
+
+    if (myAge < ADULT) {
+        System.out.println("\nWe're sorry, but you must be 18 years or older"
+                + " to check out a room.");
+        isBroken = true;
+        //System.exit(0);
+    }
+
+
+    if (myNumDays > MAX_NIGHTS) {
+        System.out.println("\nWe appologise, but your stay cannot be longer than 28 nights.");
+        isBroken = true;
+        //System.exit(0);
+    }
+
+    if (myNumDays <= 0) {
+        System.out.println("\nWe appologise, but your stay must at least be 1 night.");
+        isBroken = true;
+        //System.exit(0);
+    }
+
+    if (!(myPaymentType.equalsIgnoreCase("cash")
+            || myPaymentType.equalsIgnoreCase("credit")
+            || myPaymentType.equalsIgnoreCase("check"))) {
+        System.out.println("\nPlease enter a valid payment type. "
+                + "No spaces or extra characters, please. (Cash/Credit/Check)");
+        isBroken = true;
+        //System.exit(0);
+    }
+
+    if (myAge > MAX_AGE
+            || myNumDays > MAX_AGE) {
+        System.out.println("\n Please enter in reasonable numbers. "
+                + "(Did you tell us you were older than 124 years?)");
+        isBroken = true;
+    }
+
+    if (isBroken == true) {
+
+        System.exit(0);
+    }
+
+}
+/**
+ * calculates the total cost of user's stay.
+ * @return the total cost of user's stay.
+ */
+public double totalCost() {
+    Rooms room = null;
+
+        if (roomType.equalsIgnoreCase("single bed")
+                || roomType.equalsIgnoreCase("single")
+                ||  roomType.equalsIgnoreCase("single ")) {
+            room = new SingleRoom(1, getAdults(), getKids());
+        } else if (roomType.equalsIgnoreCase("double bed")
+                || roomType.equalsIgnoreCase("double")
+                || roomType.equalsIgnoreCase("double ")) {
+            room = new DoubleBedroom(2, getAdults(), getKids());
+        } else {
+            System.out.print("Please enter valid room type. (Single bed/ double bed)\n");
+            isBroken = true;
+            //System.exit(0);
+        }
+
+
+    System.out.println("\nYour base cost is: $" + (room.getBaseCost() * myNumDays));
+    double totalcost = room.getBaseCost() * myNumDays;
+    if (room != null)
+    {
+
+        double basecost = room.getBaseCost() * myNumDays;
+        if (myAge >= SENIOR) {
+            totalcost -= (basecost * SENIOR_DISCOUNT);
+            System.out.println("Senior age discount: -$" + (basecost * SENIOR_DISCOUNT));
+        }
+
+        if (myPaymentType.equalsIgnoreCase("cash") || myPaymentType.equalsIgnoreCase("check")) {
+            totalcost -= (basecost * PAY_TYPE_DISCOUNT);
+            System.out.println("PaymentType discount: -$" + (basecost * PAY_TYPE_DISCOUNT));
+        }
+
+
+        if (isAAA) {
+        	totalcost -= (basecost * MEMBER_DISCOUNT);
+            System.out.println("Blue Bird member beneifit: -$" + (basecost * MEMBER_DISCOUNT));
+
+        }
+
+
+    }
+
+    return (totalcost);
+}
+
+
+}
+
