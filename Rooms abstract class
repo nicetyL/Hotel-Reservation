@@ -1,0 +1,58 @@
+/**
+ * Abstract class Rooms.
+ * Holds info about the rooms.
+ */
+public abstract class Rooms {
+/**
+ * number of beds in each room.
+ */
+    protected int numBeds;
+
+    /**
+     * the cost of each room.
+     */
+    protected double myCost;
+
+    /**
+     * the number of adults in each room.
+     */
+    protected int numAdults;
+
+    /**
+     * the number of kids in each room.
+     */
+    protected int numKids;
+
+/**
+ * Rooms object.
+ * @param beds the number of beds in each room.
+ * @param adults the number of adults in each room.
+ * @param kids the number of kids in each room.
+ */
+    public Rooms(int beds, final int adults, final int kids) {
+    numBeds = beds;
+    numAdults = adults;
+    numKids = kids;
+
+    }
+/**
+ * abstract placeholder for accessor method.
+ * @return the number of adults in each room.
+ */
+ public abstract int getNumAdults();
+
+ /**
+ * abstract placeholder for accessor method.
+ * @return the number of kids in each room.
+  */
+ public abstract int getNumKids();
+
+/**
+ * abstract placeholder for accessor method.
+ * @return the base cost before any discounts are applied.
+ */
+ public abstract double getBaseCost();
+
+
+
+}
