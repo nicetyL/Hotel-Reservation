@@ -1,0 +1,70 @@
+/**
+ * The class defining a double bed room, which extends the Rooms class.
+ */
+public class DoubleBedroom extends Rooms {
+
+    /**
+     * base cost to stay in a single bed room.
+     */
+    public static final int DOUBLE_BASE_COST = 135;
+
+   /**
+    * the users entered a negative number of people or zero adults.
+    */
+   public static final int LESS = -2;
+
+   /**
+    * the maximum number of adults who can stay in a double bed room together.
+    */
+   public static final int MAX_ADULTS = 3;
+
+
+    /**
+     * double bedroom object.
+     * @param beds number of beds
+     * @param adults number of adults
+     * @param kids number of kids
+     */
+    public DoubleBedroom (int beds, final int adults, final int kids) {
+        super(beds, adults, kids);
+        beds = 2;
+        myCost = DOUBLE_BASE_COST;
+
+    }
+
+    /**
+     * accessor method to get base cost.
+     * @return base cost.
+     */
+    public double getBaseCost() {
+        return myCost;
+    }
+
+/**
+ * acessor method to get number of adults.
+ * @return number of adults
+ */
+    public int getNumAdults() {
+        if (numAdults > MAX_ADULTS) {
+            return -1;
+        } else if (numAdults <= 0) {
+            return LESS;
+        }
+        return numAdults;
+    }
+
+/**
+ * acessor method to get number of kids.
+ * @return number of kids
+ */
+    public int getNumKids() {
+        if (((numAdults > 2) && (numKids > 2))
+                || (numKids > 2)) {
+            return -1;
+        } else if (numKids < 0) {
+            return LESS;
+        }
+        return numKids;
+    }
+
+}
