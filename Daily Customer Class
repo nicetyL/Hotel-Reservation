@@ -1,0 +1,88 @@
+
+import java.util.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+/**
+ * User's inputs are asked here.
+ */
+public class DailyCustomer {
+
+/**
+ * Main method which asks user for info and generates cost.
+ * @param args arguments
+ */
+    public static void main(final String[] args) {
+        ArrayList<Reservation> arrayList = new ArrayList<Reservation>();
+
+        // get Reservation details from all customers
+        boolean bAskForMore = true;
+
+        do {
+            Reservation reserv;
+            reserv = makeReservation();
+            arrayList.add(reserv);
+
+            String option = JOptionPane.showInputDialog("Do you want add another Customer. (Y/N)");
+            if (option.equalsIgnoreCase("Y")) {
+                bAskForMore = true;
+            } else {
+                bAskForMore = false;
+            }
+            reserv.isValid();
+            System.out.println("Room Type: " + reserv.getRoomType() + "                "
+                    + "Length of stay: " + reserv.getNumDays() + " days");
+            System.out.println("\nCustomer Name: "
+                    + reserv.getCustomerName() + "      Total cost of $" + reserv.totalCost());
+            System.out.println("Thank you for doing business with us!");
+            System.out.println("_______________");
+
+        } while (bAskForMore);
+
+
+    }
+/**
+ * asks for all user input and creates reservation object based on the response.
+ * @return reservation object
+ */
+    public static Reservation makeReservation() {
+
+
+        // get detail
+        JFrame f;
+        f = new JFrame();
+        try {
+        JOptionPane.showMessageDialog(f, "Hello, Welcome to Blue Bird hotel.");
+        String name = JOptionPane.showInputDialog("Kindly give us your name.");
+        String age = JOptionPane.showInputDialog("Your age? A whole number, please.");
+        String aaa = JOptionPane.showInputDialog("Please tell us "
+                + "if you are a Blue Bird member.(Y/N)");
+        String days = JOptionPane.showInputDialog("Please tell us how "
+                + "many days you wish to stay. Whole numbers, please.");
+        String payment = JOptionPane.showInputDialog("Tell us your "
+                + "payment type. (Cash/Credit/Check)");
+        String adults = JOptionPane.showInputDialog("How many adults will be "
+                + "staying in this room? A whole number, please.");
+        String kids = JOptionPane.showInputDialog("How many kids will be staying "
+                + "in this room? A whole number, please.");
+        String room = JOptionPane.showInputDialog("What type of room do you want "
+                + "to stay in? (Single bed/Double bed)");
+        //String in = JOptionPane.showInputDialog("Please tell us your check in date.");
+        //String out = JOptionPane.showInputDialog("Please tell us your check out date.");
+
+
+        Reservation reserv = new Reservation(name, payment, Integer.parseInt(age),
+                Integer.parseInt(days), aaa.equalsIgnoreCase("Y"),
+                Integer.parseInt(adults), Integer.parseInt(kids), room);
+
+
+        return reserv;
+
+        } catch (NumberFormatException e) {
+            System.out.print("Please enter valid inputs. "
+                    + "(Did you input letters when asked for numbers?)\n");
+        }
+        return null;
+    }
+
+}
